@@ -10,6 +10,7 @@
   with_items:
    - mariadb-server
    - MySQL-python
+   - firewalld
 
 - name: Start MariaDB Service
   service: name=mariadb state=started enabled=yes
