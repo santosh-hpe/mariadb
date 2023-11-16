@@ -2,8 +2,8 @@
 
 - name: yum-clean-all
   command: yum clean all
-  args:
-    warn: yes
+#  args:
+#    warn: yes
   
 - name: Install MariaDB package
   yum: name={{ item }} state=installed
