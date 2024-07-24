@@ -1,16 +1,47 @@
 # This playbook will install MariaDB
 
-- name: yum-clean-all
-  command: yum clean all
+#- name: yum-clean-all
+#  command: yum clean all
 #  args:
 #    warn: yes
-  
-- name: Install MariaDB package
-  yum: name={{ item }} state=installed
-  with_items:
-   - mariadb-server
-   - MySQL-python
-   - firewalld
+
+- name: apt-upgrade
+  command: apt upgrade -y
+i
+- name: Ansible apt module examples
+  hosts: web
+  become: true
+  tasks:
+   - name: Ansible Update Cache and Upgrade all Packages
+     register: updatesys
+     apt:
+       name: "*"
+       state: latest
+       update_cache: yes
+    - name: Display the last line of the previous task to check the stats
+     debug:
+       msg:  "{{updatesys.stdout_lines|last}}"
+
+   - name: Ansible apt install mariadb
+     apt:
+       name: mariadb-server
+       state: present
+   - name: Ansible apt install python3-mysql.connector
+     apt:
+       name: python3-mysql.connector
+       state: present
+   - name: Ansible apt install firewalld
+     apt:
+       name: firewalld
+       state: present
+
+
+       #- name: Install MariaDB package
+       #  yum: name={{ item }} state=installed
+       #  with_items:
+       #   - mariadb-server
+       #   - MySQL-python
+       #   - firewalld
 
 - name: Start MariaDB Service
   service: name=mariadb state=started enabled=yes
